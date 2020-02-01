@@ -1,0 +1,112 @@
+const path = require("path");
+const HTMLWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+const stats = require("./config/stats");
+const cssLoaders = require("./config/css");
+
+const CWD = process.cwd();
+const cwdPath = (...arr) => path.join(CWD, ...arr);
+
+const recursiveIssuer = Module => {
+  if (Module.issuer) {
+    return recursiveIssuer(Module.issuer);
+  }
+  if (Module.name) {
+    return Module.name;
+  }
+  return false;
+};
+
+const baseConfig = projectEnter => ({
+  mode: "development",
+  entry: {
+    index: "./src/projects/two/pages/index.js",
+    home: "./src/projects/two/pages/home.js"
+  },
+  output: {
+    path: cwdPath("dist"),
+    filename: "two/js/[name]-[hash:6].js",
+    publicPath: "/assets/",
+    chunkFilename: "two/chunk/[name].[hash:6].sjs"
+  },
+  stats: stats(true),
+  resolve: {
+    alias: {
+      "@": cwdPath("src"),
+      "@pro": cwdPath("src", "projects"),
+      vue$: "vue/dist/vue.runtime.esm.js"
+    },
+    extensions: [
+      ".mjs",
+      ".js",
+      ".jsx",
+      ".ts",
+      ".tsx",
+      ".vue",
+      ".json",
+      ".wasm"
+    ],
+    modules: ["node_modules"]
+  },
+  module: {
+    rules: [
+      {
+        test: /\.[jt]s(x?)$/,
+        exclude: /node_modules/,
+        loader: "babel-loader"
+      },
+      ...cssLoaders(true)
+    ]
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        indexStyles: {
+          name: "index",
+          test: (m, c, entry = "index") =>
+            m.constructor.name === "CssModule" && recursiveIssuer(m) === entry,
+          chunks: "all",
+          enforce: true
+        },
+        homeStyles: {
+          name: "home",
+          test: (m, c, entry = "home") =>
+            m.constructor.name === "CssModule" && recursiveIssuer(m) === entry,
+          chunks: "all",
+          enforce: true
+        }
+      }
+    }
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new CopyWebpackPlugin([{ from: cwdPath("public"), to: cwdPath("dist") }]),
+    new MiniCssExtractPlugin({
+      filename: "two/style/[name]_[hash].css",
+      chunkFilename: "two/style/[name]_[hash].css"
+    }),
+    new HTMLWebpackPlugin({
+      title: "index",
+      filename: "two/index",
+      xhtml: true,
+      chunks: ["index"]
+    }),
+    new HTMLWebpackPlugin({
+      title: "home",
+      filename: "two/home",
+      xhtml: true,
+      chunks: ["home"]
+    })
+  ],
+  devServer: {
+    contentBase: cwdPath("public"),
+    compress: true,
+    port: 9000,
+    hot: true
+  }
+});
+
+module.exports = baseConfig;
