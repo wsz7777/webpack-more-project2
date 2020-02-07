@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "webpack 测试搭建",
   "scripts": {
-    "build":"webpack --config ./webpack/webpack.build.js",
+    "dev": "webpack-dev-server --config ./webpack/webpack.config.js",
+    "build": "webpack --config ./webpack/webpack.build.js",
+    "commit": "git add . && git-cz",
     "build:stag": "env-cmd -f ./env/staging.env npm run build",
     "build:pro": "env-cmd -f ./env/production.env npm run build",
-    "serve": "env-cmd -f ./env/development.env webpack-dev-server --config ./webpack/webpack.config.js",
-    "commit": "git add . && git-cz"
+    "serve": "env-cmd -f ./env/development.env npm run dev"
   },
   "keywords": [
     "webpack"
