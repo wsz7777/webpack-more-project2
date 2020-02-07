@@ -13,7 +13,7 @@ Promise.all([
 <div class="fx">
   <div class="child"></div>
 </div>
-<a href="/assets/jqtest/index.html">to index</a>
+<a href="${process.env.PUBLIC_PATH}/jqtest/index.html">to index</a>
 ${JSON.stringify(resp.data)}
     `);
   });

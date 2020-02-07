@@ -14,7 +14,7 @@ export default Vue.extend({
   render() {
     return (
       <div>
-        <div>this is main</div>
+        <div>{process.env.APP_TITLE}</div>
         <compA></compA>
         <a-button on-click={this.goTest}>go to test</a-button>
       </div>
