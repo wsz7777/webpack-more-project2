@@ -19,4 +19,5 @@ const arr = entryArr.map((projectDesc, index) =>
       })
 );
 
+console.log(`http://localhost:9000/webpack-dev-server`)
 module.exports = arr;

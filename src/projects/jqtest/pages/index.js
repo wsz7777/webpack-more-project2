@@ -13,7 +13,7 @@ Promise.all([
           <div class={S.child}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
             Accusantium, delectus.
-            <a href="/assets/vuetest/index.html">to index</a>
+            <a href={`${process.env.PUBLIC_PATH}/vuetest/index.html`}>to index</a>
           </div>
         </div>
       );

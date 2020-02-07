@@ -1,8 +1,11 @@
 // const path = require("path");
+const ENV = process.env;
+const isPro = ENV.NODE_ENV === "production";
 
 const TerserJSPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 const {
   generateEntry,
@@ -14,16 +17,20 @@ const cssLoaders = require("./config/css");
 
 const { cwdPath } = require("./config/tool");
 
-const baseConfig = ({ projectName, pages }) => ({
-  mode: "development",
+/**
+ * @method 生成初始化配置的方法
+ * @param { Object } param0 项目的各项设置
+ */
+const baseConfigGenerate = ({ projectName, pages }) => ({
+  mode: ENV.NODE_ENV,
   entry: generateEntry(projectName, pages),
   output: {
-    path: cwdPath("dist"),
+    path: cwdPath(ENV.BUILD_DIR),
     filename: `${projectName}/js/[name]-[hash:6].js`,
-    publicPath: "/assets/",
+    publicPath: `${ENV.PUBLIC_PATH}/`,
     chunkFilename: `${projectName}/chunk/[name].[hash:6].js`
   },
-  stats: stats(true),
+  stats: stats(isPro),
   resolve: {
     alias: {
       "@": cwdPath("src"),
@@ -40,7 +47,7 @@ const baseConfig = ({ projectName, pages }) => ({
         exclude: /node_modules/,
         loader: "babel-loader"
       },
-      ...cssLoaders(true),
+      ...cssLoaders(isPro),
       {
         test: /\.(png|jpe?g|gif|webp)(\?.*)?$/,
         use: {
@@ -112,18 +119,21 @@ const baseConfig = ({ projectName, pages }) => ({
     }
   },
   plugins: [
+    new Dotenv({ path: `./env/${ENV.BUILD_ENV_MODE}.env` }),
     new MiniCssExtractPlugin({
       filename: `${projectName}/style/[name]_[hash].css`,
       chunkFilename: `${projectName}/style/chunk/[name]_[hash].css`
     }),
     ...generateHTMLWebpackPlugins(projectName, pages)
   ],
-  devServer: {
-    contentBase: cwdPath("public"),
-    compress: true,
-    port: 9000,
-    hot: true
-  }
+  devServer: isPro
+    ? null
+    : {
+        contentBase: cwdPath("public"),
+        compress: true,
+        port: 9000,
+        hot: true
+      }
 });
 
-module.exports = baseConfig;
+module.exports = baseConfigGenerate;
