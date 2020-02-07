@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "webpack 测试搭建",
   "scripts": {
-    "build:stag": "env-cmd -f ./env/staging.env webpack --config ./webpack/webpack.build.js",
-    "build:pro": "env-cmd -f ./env/production.env webpack --config ./webpack/webpack.build.js",
+    "build":"webpack --config ./webpack/webpack.build.js",
+    "build:stag": "env-cmd -f ./env/staging.env npm run build",
+    "build:pro": "env-cmd -f ./env/production.env npm run build",
     "serve": "env-cmd -f ./env/development.env webpack-dev-server --config ./webpack/webpack.config.js",
     "commit": "git add . && git-cz"
   },
