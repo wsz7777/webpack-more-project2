@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "webpack 测试搭建",
   "scripts": {
-    "build": "webpack --config ./webpack/webpack.build.js",
-    "serve": "webpack-dev-server --config ./webpack/webpack.config.js",
+    "build:stag": "env-cmd -f ./env/staging.env webpack --config ./webpack/webpack.build.js",
+    "build:pro": "env-cmd -f ./env/production.env webpack --config ./webpack/webpack.build.js",
+    "serve": "env-cmd -f ./env/development.env webpack-dev-server --config ./webpack/webpack.config.js",
     "commit": "git add . && git-cz"
   },
   "keywords": [
@@ -29,6 +30,8 @@
     "css-loader": "^3.4.2",
     "cssnano": "^4.1.10",
     "cz-conventional-changelog": "^3.1.0",
+    "dotenv-webpack": "^1.7.0",
+    "env-cmd": "^10.0.1",
     "extract-loader": "^4.0.3",
     "file-loader": "^5.0.2",
     "html-webpack-plugin": "^3.2.0",
