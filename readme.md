@@ -8,34 +8,66 @@
 
 ## 项目结构
 
-```
+```bash
 .
 ├── .git
 ├── .vscode
-├── dist							                      // 构建结果
-├── public		                    // 静态资源
-├── scripts                   // 项目脚本，如新建模板项目
-├── src                       // 源码目录
-│   ├── assets                // 公共的需要被优化的静态资源目录 如制作精灵图小图片文件
-│   ├── components            // 公共的展示组件、固定逻辑组件
-│   ├── utils                 // 公共的业务组件
-│   ├── styles                // 公共的样式文件 主要是scss\less变量
-│   └── projects              // 项目存放文件夹
-│       ├── jqtest	            // jquery vue 混合项目demo
-│       └── vuetest           // vue项目demo
-├── webpack                   // webpack 配置目录
-│   ├── config                // 生成webpack配置的各项相关方法
-│   ├── webpack.base.js       // 单个项目的webpack配置
-│   ├── webpack.build.js      // 最终打包的webpack配置
-│   └── webpack.config.js     // webpack配置文件
-├── .browserslistrc           // postcss 中 autoprefixer 插件相关配置
-├── babel.config.js           // babel相关配置
-├── jsconfig.json             // vscode编辑器相关的js编辑扩展描述文件
-├── postcss.config.js         // postcss相关配置
-├── readme.md                 // 这里主要是项目使用说明
+├── dist                      # 构建结果
+├── public                    # 静态资源
+├── scripts                   # 项目脚本，如新建模板项目
+├── src                       # 源码目录
+│   ├── assets                # 公共的需要被优化的静态资源目录 如制作精灵图小图片文件
+│   ├── components            # 公共的展示组件、固定逻辑组件
+│   ├── utils                 # 公共的业务组件
+│   ├── styles                # 公共的样式文件 主要是scss\less变量
+│   └── projects              # 项目存放文件夹
+│       ├── jqtest            # jquery vue 混合项目demo
+│       └── vuetest           # vue项目demo
+├── webpack                   # webpack 配置目录
+│   ├── config                # 生成webpack配置的各项相关方法
+│   ├── webpack.base.js       # 单个项目的webpack配置
+│   ├── webpack.build.js      # 最终打包的webpack配置
+│   └── webpack.config.js     # webpack配置文件
+├── .browserslistrc           # postcss 中 autoprefixer 插件相关配置
+├── babel.config.js           # babel相关配置
+├── jsconfig.json             # vscode编辑器相关的js编辑扩展描述文件
+├── postcss.config.js         # postcss相关配置
+├── readme.md                 # 这里主要是项目使用说明
 ├── package.json
 ├── LICENSE
 ├── .gitignore
 └── yarn.lock
 ```
+
+
+
+## 项目使用调试相关
+
+### 命令介绍
+
+#### 启动 `webpack-dev-server` 服务
+
+```bash
+npm run serve
+```
+
+#### 打包测试环境
+
+```bash
+npm run build:stag
+```
+
+#### 打包生产环境
+
+```bash
+npm run build:pro
+```
+
+
+
+### Dev调试相关
+
+#### 找到调试时的文件
+
+​	我们使用的是`webpack`，所以直接访问 `http://localhost:prot/webpack-dev-server` 之后便可以看到所有的打包内容和结果。我们这个项目默认端口号为 `9435` 所以访问地址为：  `http://localhost:9435/webpack-dev-server`
 

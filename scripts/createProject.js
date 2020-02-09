@@ -6,3 +6,5 @@
  *        2. jquery demo
  *        3. vue & jquery mixed demo
  */
+
+console.log(process.env);

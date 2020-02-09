@@ -1,0 +1,26 @@
+body {
+  background-color: #eee;
+  color: red;
+}
+
+.fx {
+  width: 300px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f06;
+
+  .child {
+    width: 200px;
+    height: 200px;
+    background: url('~@/assets/airBody.jpg');
+    &::before{
+      display: block;
+      content:'';
+      width: 32px;
+      height: 32px;
+      background: #eee url('~@/assets/wait.gif')no-repeat;
+    }
+  }
+}

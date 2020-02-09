@@ -10,12 +10,13 @@ const Dotenv = require("dotenv-webpack");
 const {
   generateEntry,
   generateStyleGroup,
+  getExternals,
   generateHTMLWebpackPlugins
 } = require("./config/getEntry");
 const stats = require("./config/stats");
 const cssLoaders = require("./config/css");
 
-const { cwdPath } = require("./config/tool");
+const { cwd } = require("./config/tool");
 
 /**
  * @method 生成初始化配置的方法
@@ -25,16 +26,17 @@ const baseConfigGenerate = ({ projectName, pages }) => ({
   mode: ENV.NODE_ENV,
   entry: generateEntry(projectName, pages),
   output: {
-    path: cwdPath(ENV.BUILD_DIR),
+    path: cwd(ENV.BUILD_DIR),
     filename: `${projectName}/js/[name]-[hash:6].js`,
     publicPath: `${ENV.PUBLIC_PATH}/`,
     chunkFilename: `${projectName}/chunk/[name].[hash:6].js`
   },
+  externals: getExternals(projectName).externals,
   stats: stats(isPro),
   resolve: {
     alias: {
-      "@": cwdPath("src"),
-      "@p": cwdPath("src", "projects"),
+      "@": cwd("src"),
+      "@p": cwd("src", "projects"),
       vue$: "vue/dist/vue.runtime.esm.js"
     },
     extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
@@ -107,6 +109,20 @@ const baseConfigGenerate = ({ projectName, pages }) => ({
             }
           }
         ]
+      },
+      {
+        test: /\.(ejs|html)$/,
+        use: [
+          {
+            loader: "compile-ejs-loader",
+            options: {
+              htmlmin: true,
+              htmlminOptions: {
+                removeComments: true
+              }
+            }
+          }
+        ]
       }
     ]
   },
@@ -125,15 +141,7 @@ const baseConfigGenerate = ({ projectName, pages }) => ({
       chunkFilename: `${projectName}/style/chunk/[name]_[hash].css`
     }),
     ...generateHTMLWebpackPlugins(projectName, pages)
-  ],
-  devServer: isPro
-    ? null
-    : {
-        contentBase: cwdPath("public"),
-        compress: true,
-        port: 9000,
-        hot: true
-      }
+  ]
 });
 
 module.exports = baseConfigGenerate;
