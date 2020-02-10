@@ -1,5 +1,5 @@
-// import { cloneDeep } from "lodash";
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { cwd } = require("./tool");
 
 const getCssLoaderAbout = isPro => {
   const arr = [];
@@ -28,7 +28,7 @@ const getCssLoaderAbout = isPro => {
   };
 
   const scss_loader = {
-    loader: "sass-loader", // 将 Sass 编译成 CSS
+    loader: "sass-loader",
     options: {
       sourceMap: true,
       prependData: '@import "~@/styles/variables.scss";'
@@ -36,12 +36,25 @@ const getCssLoaderAbout = isPro => {
   };
 
   const less_loader = {
-    loader: "sass-loader", // 将 Sass 编译成 CSS
+    loader: "less-loader",
     options: {
-      sourceMap: true,
-      prependData: '@import "~@/styles/variables.scss";'
+      sourceMap: true
     }
   };
+
+  const less_vars = {
+    loader: "sass-resources-loader",
+    options: {
+      sourceMap: true,
+      resources: cwd("src", "styles", "variables.less")
+    }
+  };
+
+  const df_arr_loader = isModule => [
+    style_loader,
+    css_loader(isModule),
+    postcss_loader
+  ];
 
   // scss
   arr.push({
@@ -49,10 +62,10 @@ const getCssLoaderAbout = isPro => {
     oneOf: [
       {
         test: /\.module\.\w+$/,
-        use: [style_loader, css_loader(true), postcss_loader, scss_loader]
+        use: [...df_arr_loader(true), scss_loader]
       },
       {
-        use: [style_loader, css_loader(), postcss_loader, scss_loader]
+        use: [...df_arr_loader(), scss_loader]
       }
     ]
   });
@@ -62,10 +75,10 @@ const getCssLoaderAbout = isPro => {
     oneOf: [
       {
         test: /\.module\.\w+$/,
-        use: [style_loader, css_loader(true), postcss_loader]
+        use: [...df_arr_loader(true)]
       },
       {
-        use: [style_loader, css_loader(), postcss_loader]
+        use: [...df_arr_loader()]
       }
     ]
   });
@@ -75,10 +88,10 @@ const getCssLoaderAbout = isPro => {
     oneOf: [
       {
         test: /\.module\.\w+$/,
-        use: [style_loader, css_loader(true), postcss_loader, less_loader]
+        use: [...df_arr_loader(true), less_loader, less_vars]
       },
       {
-        use: [style_loader, css_loader(), postcss_loader, less_loader]
+        use: [...df_arr_loader(), less_loader, less_vars]
       }
     ]
   });

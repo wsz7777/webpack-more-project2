@@ -71,3 +71,53 @@ npm run build:pro
 
 ​	我们使用的是`webpack`，所以直接访问 `http://localhost:prot/webpack-dev-server` 之后便可以看到所有的打包内容和结果。我们这个项目默认端口号为 `9435` 所以访问地址为：  `http://localhost:9435/webpack-dev-server`
 
+## 生产环境相关
+
+### `CDN`和`externals`
+
+​	`CDN` 和 `externals` 是息息相关的，所以使用了 `D2` 的 `CDN` 的描述方式，你可以在项目目录下去建一个`config.js`的配置文件，如下：
+
+```js
+module.exports = {
+  cdn: [
+    {
+      name: "jquery",
+      library: "jQuery",
+      js: "https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js",
+      css: ""
+    },
+    {
+      name: "vue",
+      library: "Vue",
+      js: "https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js",
+      css: ""
+    },
+    {
+      name: "axios",
+      library: "axios",
+      js: "https://cdn.jsdelivr.net/npm/axios@0.19.0/dist/axios.min.js",
+      css: ""
+    },
+    {
+      name: "swiper",
+      library: "Swiper",
+      js: "https://cdn.jsdelivr.net/npm/swiper@5.3.1/js/swiper.min.js",
+      css: "https://cdn.jsdelivr.net/npm/swiper@5.3.1/css/swiper.min.css"
+    },
+	    {
+      name: "",
+      library: "",
+      js: "https://cdn.jsdelivr.net/npm/swiper@5.3.1/js/swiper.min.js",
+      css: "https://cdn.jsdelivr.net/npm/swiper@5.3.1/css/swiper.min.css"
+    }
+  ]
+};
+
+```
+
+> **注：** `name`和`libray`都不是必须的。按需要配置此项即可。
+
+​	如果是要配置三方库，要加载全局变量，那么`name`和`libray`就是必须的了；
+
+​	如果只是加载某个`js`要做埋点文件，或是加载某个`css`那么`name`和`libray`就可以不用配了
+
