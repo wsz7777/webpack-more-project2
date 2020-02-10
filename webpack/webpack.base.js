@@ -31,7 +31,7 @@ const baseConfigGenerate = ({ projectName, pages }) => ({
     publicPath: `${ENV.PUBLIC_PATH}/`,
     chunkFilename: `${projectName}/chunk/[name].[hash:6].js`
   },
-  externals: getExternals(projectName).externals,
+  externals: getExternals(projectName),
   stats: stats(isPro),
   resolve: {
     alias: {

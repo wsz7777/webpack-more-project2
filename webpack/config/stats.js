@@ -6,7 +6,7 @@
 const statsFunc = isPro => {
   return {
     // 添加资源信息
-    assets: true,
+    assets: isPro,
 
     // 对资源按指定的字段进行排序
     // 你可以使用 `!field` 来反转排序。
@@ -16,13 +16,13 @@ const statsFunc = isPro => {
     builtAt: true,
 
     // 添加缓存（但未构建）模块的信息
-    cached: true,
+    cached: isPro,
 
     // 显示缓存的资源（将其设置为 `false` 则仅显示输出的文件）
     cachedAssets: true,
 
     // 添加 children 信息
-    children: true,
+    children: isPro,
 
     // 添加 chunk 信息（设置为 `false` 能允许较少的冗长输出）
     chunks: false,
