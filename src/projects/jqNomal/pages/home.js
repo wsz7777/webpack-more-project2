@@ -8,7 +8,8 @@ import "./home.scss";
 
 axios.get("/data/get.json").then(resp => {
   // console.log(resp.data);
-  console.log($("#app"), resp.data);
+  console.log($("#app"), resp?.data);
+  console.log(resp?.kkk ?? "wo 可以用判空语法了");
   $("#app").append(`
 <div class="fx">
   <div class="child"></div>
