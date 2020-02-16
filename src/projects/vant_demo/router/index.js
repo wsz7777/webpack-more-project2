@@ -12,7 +12,7 @@ const router = new Router({
     {
       path: "/home",
       name: "home",
-      component: () => import("@p/vantDemo/view/home")
+      component: () => import("@p/vant_demo/view/home")
     },
     {
       path:"*",
