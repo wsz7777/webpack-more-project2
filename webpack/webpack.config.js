@@ -33,24 +33,20 @@ const FirstConfigDev = {
     overlay: true,
     open: true,
     openPage: "webpack-dev-server",
-    host: "dev.10010.com",
+    host: "dev.xxxx.com",
     proxy: {
       // 基础设施
-      "/jf-res/mobile/": {
+      "/xxx/mobile/": {
         ...options,
         pathRewrite: {
-          "^/jf-res/mobile/": "/cms/jf-res/mobile/" // rewrite path
+          "^/xxx/mobile/": "/cms/xxx/mobile/" // rewrite path
         }
       },
       "/cms/": {
         ...options
         // pathRewrite: { "^/cms": "/" }
       },
-      "/jf-mall": options,
-      "/jf-order": options,
-      "/jf-admin": options,
-      "/wx000/jf-order": options,
-      "/wx000/jf-mall": options,
+      "/xxx": options,
       [ENV.PUBLIC_PATH]: {
         ...options,
         target: "http://localhost:9435",
