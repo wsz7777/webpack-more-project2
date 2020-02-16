@@ -1,11 +1,7 @@
 const path = require("path");
 const fs = require("fs");
-
-const HTMLWebpackPlugin = require("html-webpack-plugin");
-
-const cwd = (...arr) => path.join(process.cwd(), ...arr);
-const projectsPath = (...arr) => cwd("src", "projects", ...arr);
-const getProjectPagesPath = dir => projectsPath(dir, "pages");
+const { /* cwd, */ projectsPath, getProjectPagesPath } = require("./tool");
+const all = require("./getHTMLTemplates");
 
 /**
  * @method 获取项目列表
@@ -21,7 +17,7 @@ const getProjects = () => fs.readdirSync(projectsPath());
 const getPages = basePath =>
   fs
     .readdirSync(basePath)
-    .filter(fileName => /[jt]s$/.test(fileName))
+    .filter(fileName => /\.[jt]s$/.test(fileName))
     .map(pageName => pageName.replace(/\.\S*/, ""));
 
 /**
@@ -38,23 +34,6 @@ const generateEntry = (projectName, pages) => {
   );
   return entry;
 };
-
-/**
- * @method  生成HTMLWebpackPlugins插件配置列表
- * @param { String } projectName 项目名称
- * @param { Array } pages 页面名称列表
- * @returns { Array }
- */
-const generateHTMLWebpackPlugins = (projectName, pages) =>
-  pages.map(
-    page =>
-      new HTMLWebpackPlugin({
-        title: page,
-        filename: `${projectName}/${page}.html`,
-        xhtml: true,
-        chunks: [page]
-      })
-  );
 
 const recursiveIssuer = Module => {
   if (Module.issuer) {
@@ -91,7 +70,7 @@ const entryArr = getProjects().map(dir => ({
 module.exports = {
   entryArr,
   generateEntry,
-  generateHTMLWebpackPlugins,
-  generateStyleGroup
+  generateStyleGroup,
+  ...all
 };
 console.table(entryArr);
