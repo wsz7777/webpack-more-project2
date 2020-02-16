@@ -1,8 +1,12 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { cwd } = require("./tool");
+const { mergeWith, isArray } = require("lodash");
 
-const getCssLoaderAbout = isPro => {
+const getCssLoaderAbout = (isPro, config) => {
   const arr = [];
+  // console.log(config);
+  // postcss-px-to-viewport
+  const postcssOption = config.postcss || {};
 
   const modules = {
     localIdentName: isPro ? "[hash:base64:7]" : "[name]-[local]-[hash:base64:5]"
@@ -24,7 +28,9 @@ const getCssLoaderAbout = isPro => {
 
   const postcss_loader = {
     loader: "postcss-loader",
-    options: { sourceMap: true }
+    options: mergeWith({ sourceMap: true }, postcssOption, (old, src) => {
+      if (isArray(old)) return old.concat(src);
+    })
   };
 
   const scss_loader = {
