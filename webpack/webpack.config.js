@@ -25,7 +25,7 @@ const options = {
 
 const FirstConfigDev = {
   devServer: {
-    publicPath: `${ENV.PUBLIC_PATH}/`,
+    publicPath: `${ENV.PUBLIC_PATH}/`, 
     contentBase: cwd("public"),
     compress: true,
     port: 9435,
@@ -33,13 +33,12 @@ const FirstConfigDev = {
     overlay: true,
     open: true,
     openPage: "webpack-dev-server",
-    host: "dev.xxxx.com",
     proxy: {
       // 基础设施
-      "/xxx/mobile/": {
+      "/mobile/": {
         ...options,
         pathRewrite: {
-          "^/xxx/mobile/": "/cms/xxx/mobile/" // rewrite path
+          "^/mobile/": "/cms/xxx/mobile/" // rewrite path
         }
       },
       "/cms/": {

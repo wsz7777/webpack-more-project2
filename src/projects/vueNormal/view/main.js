@@ -1,6 +1,6 @@
-import Vue from "@/projects/vueNormal/view/vue";
-import { Button } from "@/projects/vueNormal/view/ant-design-vue";
-import compA from "@/projects/vueNormal/view/@p/vuetest/components/compA/compA";
+import Vue from "vue";
+import { Button } from "ant-design-vue";
+import compA from "@p/vuetest/components/compA/compA";
 
 Vue.component(Button.name, Button);
 
