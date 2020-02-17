@@ -15,7 +15,12 @@ const router = new Router({
       component: () => import("@p/vant_demo/view/home")
     },
     {
-      path:"*",
+      path: "/homes",
+      name: "homes",
+      component: () => import("@p/vant_demo/view/home")
+    },
+    {
+      path: "*",
       component: () => import("@p/vuetest/view/404")
     }
   ]

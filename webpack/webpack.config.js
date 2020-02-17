@@ -25,7 +25,7 @@ const options = {
 
 const FirstConfigDev = {
   devServer: {
-    publicPath: `${ENV.PUBLIC_PATH}/`, 
+    publicPath: `${ENV.PUBLIC_PATH}/`,
     contentBase: cwd("public"),
     compress: true,
     port: 9435,
@@ -60,7 +60,29 @@ const arr = entryArr
   // 每项添加内容
   .map(itemConfig =>
     merge(itemConfig, {
-      plugins: []
+      plugins: [],
+      module: {
+        rules: [
+          {
+            enforce: "pre",
+            test: /\.(vue|(j|t)sx?)$/,
+            exclude: [/node_modules/],
+            use: [
+              {
+                loader: "eslint-loader",
+                options: {
+                  extensions: [".js", ".jsx", ".vue"],
+                  cache: true,
+                  cacheIdentifier: "81895b14",
+                  emitWarning: true,
+                  emitError: true,
+                  fix: true
+                }
+              }
+            ]
+          }
+        ]
+      }
     })
   );
 
