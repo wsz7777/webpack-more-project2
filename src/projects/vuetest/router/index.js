@@ -29,7 +29,7 @@ const router = new Router({
       component: () => import("@p/vuetest/view/test")
     },
     {
-      path:"*",
+      path: "*",
       component: () => import("@p/vuetest/view/404")
     }
   ]
