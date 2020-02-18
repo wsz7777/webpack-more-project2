@@ -3,7 +3,8 @@ import Router from "vue-router";
 Vue.use(Router);
 
 const router = new Router({
-  mode: "hash",
+  mode: "history",
+  base: `${process.env.PUBLIC_PATH}/vant_demo`,
   routes: [
     {
       path: "/",

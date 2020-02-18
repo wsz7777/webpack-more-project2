@@ -1,13 +1,13 @@
 const ENV = process.env;
 const isPro = ENV.NODE_ENV === "production";
 
-const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const merge = require("webpack-merge");
 
 const configGenerate = require("./webpack.base");
 const { entryArr } = require("./config/getEntry");
+const FirstConfigDev = require("./config/devServer");
 const { cwd } = require("./config/tool");
 
 const FirstConfigEvery = {
@@ -20,40 +20,6 @@ const FirstConfigEvery = {
       }
     ])
   ]
-};
-
-const options = {
-  ws: false,
-  changeOrigin: true,
-  target: ENV.URL_ORIGIN
-};
-
-const FirstConfigDev = {
-  devServer: {
-    publicPath: `${ENV.PUBLIC_PATH}/`,
-    contentBase: cwd("dist"),
-    compress: true,
-    port: 9435,
-    hot: true,
-    overlay: true,
-    open: true,
-    openPage: "webpack-dev-server",
-    writeToDisk: filePath => /\/image\//.test(filePath),
-    proxy: {
-      // 基础设施
-      "/mobile/": {
-        ...options,
-        pathRewrite: {
-          "^/mobile/": "/cms/xxx/mobile/" // rewrite path
-        }
-      },
-      "/cms/": {
-        ...options
-        // pathRewrite: { "^/cms": "/" }
-      },
-      "/xxx": options
-    }
-  }
 };
 
 const arr = entryArr
