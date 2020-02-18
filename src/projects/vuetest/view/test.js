@@ -23,7 +23,8 @@ export default Vue.extend({
         <a-button
           on-click={() => {
             this.$router.push({ name: "main" });
-          }}>
+          }}
+        >
           go to main
         </a-button>
         <div>here is components test: {this.clickOne}</div>

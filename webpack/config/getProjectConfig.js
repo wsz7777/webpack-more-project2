@@ -34,9 +34,7 @@ const getProjectConfig = projectName => {
 const getCDN_Config = projectName => {
   const config = getProjectConfig(projectName).cdn;
 
-  const other_config_arr = config.filter(
-    ({ name, library }) => !(name && library)
-  );
+  const other_config_arr = config.filter(({ name, library }) => !(name && library));
 
   const ex_config_obj = Object.values(
     config

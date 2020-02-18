@@ -13,7 +13,12 @@ const { cwd } = require("./config/tool");
 const FirstConfigEvery = {
   plugins: [
     new CleanWebpackPlugin(),
-    new CopyWebpackPlugin([{ from: cwd("public"), to: cwd("dist") }])
+    new CopyWebpackPlugin([
+      {
+        from: cwd("public"),
+        to: isPro ? cwd("dist") : cwd("dist", ENV.PUBLIC_PATH.replace("/", ""))
+      }
+    ])
   ]
 };
 
@@ -26,13 +31,14 @@ const options = {
 const FirstConfigDev = {
   devServer: {
     publicPath: `${ENV.PUBLIC_PATH}/`,
-    contentBase: cwd("public"),
+    contentBase: cwd("dist"),
     compress: true,
     port: 9435,
     hot: true,
     overlay: true,
     open: true,
     openPage: "webpack-dev-server",
+    writeToDisk: filePath => /\/image\//.test(filePath),
     proxy: {
       // 基础设施
       "/mobile/": {
@@ -45,12 +51,7 @@ const FirstConfigDev = {
         ...options
         // pathRewrite: { "^/cms": "/" }
       },
-      "/xxx": options,
-      [ENV.PUBLIC_PATH]: {
-        ...options,
-        target: "http://localhost:9435",
-        pathRewrite: { [`^${ENV.PUBLIC_PATH}`]: "/" }
-      }
+      "/xxx": options
     }
   }
 };

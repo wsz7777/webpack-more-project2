@@ -29,8 +29,7 @@ const getPages = basePath =>
 const generateEntry = (projectName, pages) => {
   const entry = {};
   pages.forEach(
-    pageName =>
-      (entry[pageName] = projectsPath(projectName, "pages", `${pageName}.js`))
+    pageName => (entry[pageName] = projectsPath(projectName, "pages", `${pageName}.js`))
   );
   return entry;
 };

@@ -56,11 +56,7 @@ const getCssLoaderAbout = (isPro, config) => {
     }
   };
 
-  const df_arr_loader = isModule => [
-    style_loader,
-    css_loader(isModule),
-    postcss_loader
-  ];
+  const df_arr_loader = isModule => [style_loader, css_loader(isModule), postcss_loader];
 
   // scss
   arr.push({

@@ -24,3 +24,6 @@ jf-active
 dist
 distDev
 .history
+
+package-lock.json
+yarn.lock
