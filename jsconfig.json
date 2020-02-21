@@ -2,6 +2,8 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
+    // "checkJs": true,
+    "moduleResolution": "node",
     "target": "esnext",
     "baseUrl": ".",
     "paths": {

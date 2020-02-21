@@ -12,7 +12,6 @@ const {
   generateStyleGroup,
   generateHTMLWebpackPlugins
 } = require("./config/getEntry");
-const stats = require("./config/stats");
 const cssLoaders = require("./config/css");
 
 const { cwd } = require("./config/tool");
@@ -33,7 +32,7 @@ const baseConfigGenerate = ({ projectName, pages }) => {
       chunkFilename: `${projectName}/chunk/[name].[hash:6].js`
     },
     externals: getExternals(projectName),
-    stats: stats(isPro),
+    stats: isPro ? "normal" : "errors-only",
     resolve: {
       alias: {
         "@": cwd("src"),

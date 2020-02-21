@@ -18,6 +18,7 @@ module.exports = {
     open: true,
     // bonjour: true,
     openPage: "webpack-dev-server",
+    stats: "errors-only",
     writeToDisk: filePath => /\/image\//.test(filePath),
     proxy: {
       // 基础设施

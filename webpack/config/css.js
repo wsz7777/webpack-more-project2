@@ -71,7 +71,7 @@ const getCssLoaderAbout = (isPro, config) => {
       }
     ]
   });
-
+  // css
   arr.push({
     test: /\.css$/,
     oneOf: [
@@ -84,7 +84,7 @@ const getCssLoaderAbout = (isPro, config) => {
       }
     ]
   });
-
+  // less
   arr.push({
     test: /\.less$/,
     oneOf: [
